@@ -1,5 +1,5 @@
 <?php
-$release="0.1.1";
+$release="0.2.0";
 
 session_start();
 
