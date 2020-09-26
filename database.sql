@@ -1,5 +1,3 @@
---- Tables
-
 CREATE TABLE `appointment` (
   `appointmentid` int(9) NOT NULL,
   `userid` int(9) NOT NULL,

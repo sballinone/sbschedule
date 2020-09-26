@@ -6,7 +6,7 @@ session_start();
 include("header.php");
 
 if (isset($_POST['pwd'])) {
-	$sql = "SELECT userid FROM users WHERE email = '".strip_tags($_POST['email'])."' AND password = '".md5(strip_tags($_POST['pwd']))."' AND active = 1;";
+	$sql = "SELECT userid FROM users WHERE email = '".strip_tags(strtolower($_POST['email']))."' AND password = '".md5(strip_tags($_POST['pwd']))."' AND active = 1;";
 
 	$result = $db->query($sql);
 

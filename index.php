@@ -1,5 +1,5 @@
 <?php
-$release="0.1.0";
+$release="0.1.1";
 
 session_start();
 
@@ -94,7 +94,7 @@ require_once "header.php";
 							}
 
 							if(!$appt->enabled) {
-								$styleBACK = "background-color: #ff8a00";
+								$styleBACK = "background-color: #990000; color: #ffffff;";
 							}
 
 
