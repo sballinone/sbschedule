@@ -6,9 +6,9 @@ INSERT INTO `appointment` (`appointmentid`, `userid`, `title`, `address`, `apptD
 (4, 1, 'Schweinshaxe', 'Brauereigasthof Karlsbrauerei', '2020-10-23 12:30:00', '2020-09-22 00:32:15', NULL, '2020-09-30 03:36:59', NULL, 1),
 (5, 1, 'Sushi', 'Sushi Le', '2020-10-06 12:30:00', '2020-09-22 00:32:15', NULL, '2020-09-26 00:37:28', NULL, 1);
 
-INSERT INTO `responses` (`registrationid`, `userid`, `appointmentid`, `response`, `responsed`, `changed`) VALUES
-(1, 1, 4, -1, '2020-09-26 02:43:42', NULL),
-(2, 1, 5, 1, '2020-09-26 02:43:42', NULL);
+INSERT INTO `responses` (`registrationid`, `userid`, `appointmentid`, `response`, `response`, `responsed`, `changed`) VALUES
+(1, 1, 4, -1, 2, '2020-09-26 02:43:42', NULL),
+(2, 1, 5, 1, 2, '2020-09-26 02:43:42', NULL);
 
 INSERT INTO `users` (`userid`, `firstname`, `lastname`, `email`, `password`, `lang`, `active`, `admin`) VALUES
 (1, 'Demo', 'User', 'demo@user.com', 'fe01ce2a7fbac8fafaed7c982a04e229', 'de', 1, 1);

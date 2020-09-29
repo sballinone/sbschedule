@@ -16,6 +16,7 @@ CREATE TABLE `responses` (
   `userid` int(9) NOT NULL,
   `appointmentid` int(9) NOT NULL,
   `response` int(5) NOT NULL,
+  `people` int(5) NOT NULL DEFAULT '1',
   `responsed` datetime NOT NULL,
   `changed` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
