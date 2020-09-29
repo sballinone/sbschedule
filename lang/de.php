@@ -2,7 +2,9 @@
 $output = [];
 
 // Common phrases
+$output['add'] = "Hinzufügen";
 $output['address'] = "Ort";
+$output['archived'] = "Archivierte Events";
 $output['close'] = "Schließen";
 $output['email'] = "E-Mail";
 $output['hi'] = "Hey";

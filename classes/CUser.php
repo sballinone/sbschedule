@@ -8,8 +8,11 @@ class CUser {
     public $active;
     public $admin;
 
-    public function __construct($db) {
-        $sql = "SELECT * FROM users WHERE userid = ".$_SESSION['userid'];
+    public function __construct($db, $userid = 0) {
+        if($userid == 0) {
+            $userid = $_SESSION['userid'];
+        }
+        $sql = "SELECT * FROM users WHERE userid = ".$userid;
         $result = $db->query($sql);
         
         if($result->num_rows) {

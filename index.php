@@ -1,5 +1,5 @@
 <?php
-$release="0.3.2";
+$release="0.3.3";
 
 session_start();
 
@@ -128,11 +128,11 @@ require_once "header.php";
 					<!--<div class='attraction' onclick='javascript:location.href="index.php?do=yourAccount"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 						<strong><?=$output['yourAccount'];?></strong>
 					</div>-->
-					<!--<?php if($user->admin) { ?>
+					<?php if($user->admin) { ?>
 						<div class='attraction' onclick='javascript:location.href="index.php?do=members"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 							<strong><?=$output['members'];?></strong>
 						</div>
-					<?php } ?>-->
+					<?php } ?>
 				</div>
 				<!-- /User Menu -->
 

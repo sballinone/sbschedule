@@ -1,4 +1,4 @@
-<span class='heading'><?=$current->title;?></span><br />
+<span class='heading'><?=$output['archived'];?></span><br />
 
 <div class="elements" style='margin-top: 50px'>	
 
