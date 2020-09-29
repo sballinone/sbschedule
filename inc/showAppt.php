@@ -409,11 +409,11 @@ switch(strip_tags($_GET['fkt'])) {
 			}
 
 			if($current->max) {
-				echo "var max = ".$current->max.";";
+				echo "var max = ".$current->max."; ";
 			} else {
-				echo "var max = 32000000";
+				echo "var max = 32000000; ";
 			}
-			echo "var tnCount = ".$tnCount.";";
+			echo "var tnCount = ".$tnCount."; ";
 		?>
 
 		if((parseInt(tnCount) + parseInt(people) - parseInt(ownedplaces)) > max) {
