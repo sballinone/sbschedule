@@ -13,12 +13,200 @@ foreach($allAppts as $appt) {
 if(!$found) { // if the event is a past one, $found will be 0. Important for future usage.
 	$current = new CAppointment($db, $current);
 }
+
+// Check response
+$responsed = false;
+$result = $db->query("SELECT response, people FROM responses WHERE userid = ".$user->userid." AND appointmentid = ".$current->appointmentid);
+if($result->num_rows) {
+	$data = $result->fetch_assoc();
+	switch($data['response']) {
+		case '1': 
+			$addAttrYes = " style='background-color: #009900; color: #ffffff'";
+		break;
+		
+		case '-1':
+			$addAttrNo = " style='background-color: #990000; color: #ffffff'";
+		break;
+	}
+	$tn = $data['people'];
+	$responsed = true;
+}
+
+$tnCount = 0;
+
+
+
+switch(strip_tags($_GET['fkt'])) {
+	case 'cancel':
+		$sql="UPDATE appointment SET enabled = 0 WHERE appointmentid = ".$current->appointmentid.";";
+		$result = $db->query($sql);
+
+		$sql="SELECT users.email, users.firstname FROM users left join responses ON responses.userid = users.userid WHERE responses.appointmentid = ".$current->appointmentid.";";
+		$result = $db->query($sql);
+
+		if($result->num_rows) {
+			while($data = $result->fetch_assoc()) {
+				$mtxt = "Hi ".$data['firstname'].",\r\n\r\n";
+				$mtxt .= $output['apptCancelMailBeforeDetails']."\r\n";
+				$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n\r\n";
+				$mtxt .= $output['apptCancelMailAfterDetails'];
+				$mtxt .= $mtxtfooter;
+
+				mail($data['email'],"SB Schedule · Event ".$current->title." canceled",$mtxt,"From: info@saskiabrueckner.com");
+			}
+		}
+
+		$current->enabled = 0;
+
+		echo "<div class='notif'>".$output['apptCanceled']."</div>";
+	break;
+
+	case 'save':
+		$apptDate = strip_tags($_POST['apptDate']);
+		$apptDate = str_replace("/","-",$apptDate);
+		if(strlen($apptDate) < 19) {
+			$apptDate .= ":00";
+		}
+		if($apptDate != $current->apptDate) {
+			$sql="UPDATE appointment SET apptDate = '".$apptDate."', updated = '".date('Y-m-d H:i:s')."' WHERE appointmentid = ".$current->appointmentid.";";
+			$db->query($sql);
+		}
+		
+		$address = strip_tags($_POST['address']);
+		if($address != $current->address) {
+			$sql="UPDATE appointment SET address = '".$address."', updated = '".date('Y-m-d H:i:s')."' WHERE appointmentid = ".$current->appointmentid.";";
+			$db->query($sql);
+		}
+
+		$apptResponse = strip_tags($_POST['apptResponse']);
+		$apptResponse = str_replace("/","-",$apptResponse);
+		if(strlen($apptResponse) < 19 && strlen($apptResponse) != "") {
+			$apptResponse .= ":00";
+		}
+		if($apptResponse != $current->response) {
+			$sql="UPDATE appointment SET response = '".$apptResponse."', updated = '".date('Y-m-d H:i:s')."' WHERE appointmentid = ".$current->appointmentid.";";
+			$db->query($sql);
+		}
+		
+		$maxtn = strip_tags($_POST['maxtn']);
+		if($maxtn != $current->max) {
+			$sql="UPDATE appointment SET max = '".$maxtn."', updated = '".date('Y-m-d H:i:s')."' WHERE appointmentid = ".$current->appointmentid.";";
+			$db->query($sql);
+		}
+		
+		$sql="SELECT users.email, users.firstname FROM users left join responses ON responses.userid = users.userid WHERE responses.appointmentid = ".$current->appointmentid.";";
+		$result = $db->query($sql);
+
+		if($result->num_rows) {
+			while($data = $result->fetch_assoc()) {
+				$mtxt = "Hi ".$data['firstname'].",\r\n\r\n";
+				$mtxt .= $output['apptChangedMail']."\r\n";
+				$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n".$output['apptResponseDate']." ".$current->response;
+				$mtxt .= $mtxtfooter;
+
+				mail($data['email'],"SB Schedule · Event ".$current->title." changed",$mtxt,"From: info@saskiabrueckner.com");
+			}
+		}
+
+		$current = new CAppointment($db, $current->appointmentid);
+
+		echo "<div class='notif'>".$output['apptChanged']."</div>";
+	break;
+
+	case 'accept':
+		if($responsed) {
+			$sql="UPDATE responses SET response = 1, changed = '".date('Y-m-d H:i:s')."', people = ".strip_tags($_GET['people'])." WHERE appointmentid = ".$current->appointmentid." AND userid = ".$user->userid.";";
+		} else {
+			$sql="INSERT INTO responses VALUES (
+				NULL,
+				'".$user->userid."',
+				'".$current->appointmentid."',
+				'1',
+				'".strip_tags($_GET['people'])."',
+				'".date('Y-m-d H:i:s')."',
+				NULL);";
+		}
+		$result = $db->query($sql);
+
+		$mtxt = "Hi ".$user->firstname.",\r\n\r\n";
+		$mtxt .= $output['apptConfirmedMail']."\r\n";
+		$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title.", ".strip_tags($_GET['people'])." PAX";
+		$mtxt .= $mtxtfooter;
+
+		mail($user->email,"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
+
+		$sql = "SELECT users.email FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
+		$result = $db->query($sql);
+		$data = $result->fetch_assoc();
+
+		$mtxt = "New confirmation for ".date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n";
+		$mtxt .= $user->firstname." ".$user->lastname.", ".strip_tags($_GET['people'])." PAX";
+		$mtxt .= $mtxtfooter;
+
+		mail($data['email'],"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
+		
+		echo "<div class='notif'>".$output['apptConfirmed']."</div>";
+
+		$addAttrYes = " style='background-color: #009900; color: #ffffff'";
+		$addAttrNo = "";
+	break;
+	
+	case 'decline':
+		if($responsed) {
+			$sql="UPDATE responses SET response = -1, changed = '".date('Y-m-d H:i:s')."', people = 0 WHERE appointmentid = ".$current->appointmentid." AND userid = ".$user->userid.";";
+		} else {
+			$sql="INSERT INTO responses VALUES (
+				NULL,
+				'".$user->userid."',
+				'".$current->appointmentid."',
+				'-1',
+				'0',
+				'".date('Y-m-d H:i:s')."',
+				NULL);";
+		}
+		$result = $db->query($sql);
+
+		$mtxt = "Hi ".$user->firstname.",\r\n\r\n";
+		$mtxt .= $output['apptDeclinedMail']."\r\n";
+		$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title.", ".strip_tags($_GET['people'])." PAX";
+		$mtxt .= $mtxtfooter;
+
+		mail($user->email,"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
+
+		$sql = "SELECT users.email FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
+		$result = $db->query($sql);
+		$data = $result->fetch_assoc();
+
+		$mtxt = "New cancelation for ".date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n";
+		$mtxt .= $user->firstname." ".$user->lastname.", 0 PAX";
+		$mtxt .= $mtxtfooter;
+
+		mail($data['email'],"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
+		
+		echo "<div class='notif'>".$output['apptDeclined']."</div>";
+
+		$addAttrYes = "";
+		$addAttrNo = " style='background-color: #990000; color: #ffffff'";
+	break;
+}
+
 ?>
 
-<form action="index.php?do=showAppt&save=true&id=<?=$current->appointmentid;?>" method="POST">
+<form action="index.php?do=showAppt&fkt=save&id=<?=$current->appointmentid;?>" method="POST">
 
 <span class='heading'><?=$current->title;?></span><br />
-<small><?=date('d. M Y H:i', strtotime($current->apptDate));?></small>
+<small>
+	<?php
+		echo "<strong>".date('d. M Y H:i', strtotime($current->apptDate))."</strong> · ";
+		echo "<span id='tnCount'>".$tnCount."</span> ".$output['apptSaidYes']."<br />";
+
+		$sql = "SELECT firstname, lastname, email FROM users WHERE userid = ".$current->userid.";";
+		$result = $db->query($sql);
+		$data = $result->fetch_assoc();
+
+		echo $output['organizer']." ".$data['firstname']." ".$data['lastname']." <a href='mailto:".$data['email']."' style='text-decoration: none; color: #ffffff; background-color: #000000; padding: 2px 5px;'><i class='icofont-envelope'> </i></a>";
+	?>
+</small>
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
@@ -42,13 +230,26 @@ if(!$found) { // if the event is a past one, $found will be 0. Important for fut
 			<input type="text" name="apptResponse" id="frmApptResponse" placeholder="YYYY-MM-DD HH:MM:SS" value="<?=$current->response;?>" <?php if(!$user->admin || !$current->enabled) echo "readonly"; ?>>
 		</div>    
 	</div>
-	<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-		<div class="box">
-			<br /><?=$output['apptMax'];?><br />
-			<input type="text" name="max" placeholder="" value="<?=$current->max;?>" <?php if(!$user->admin || !$current->enabled) echo "readonly"; ?>>
-		</div>    
-	</div>
-	<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+	
+
+
+	<?php 
+	if($user->admin) {
+		?>
+		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+			<div class="box">
+				<br /><?=$output['apptMax'];?><br />
+				<input type="text" name="maxtn" placeholder="" value="<?=$current->max;?>" <?php if(!$user->admin || !$current->enabled) echo "readonly"; ?>>
+			</div>    
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
+		<?php 
+	} else {
+		echo '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">';
+	} ?>
+
+
+
 		<div class="box">
 			<br /><?=$output['apptStatus'];?><br />
 			
@@ -78,37 +279,32 @@ if(!$found) { // if the event is a past one, $found will be 0. Important for fut
 
 
 
-<?php if($current->enabled) { 
-	
-	// Check response
-	$result = $db->query("SELECT response FROM responses WHERE userid = ".$user->userid." AND appointmentid = ".$current->appointmentid);
-	if($result->num_rows) {
-		$data = $result->fetch_assoc();
-		switch($data['response']) {
-			case '1': 
-				$addAttrYes = " style='background-color: #009900; color: #ffffff'";
-			break;
-			
-			case '-1':
-				$addAttrNo = " style='background-color: #990000; color: #ffffff'";
-			break;
-		}
-	}
-	
+<?php if($current->enabled && ($current->response >= date('Y-m-d h:i:s') || !$current->response) && ($current->apptDate >= date('Y-m-d h:i:s'))) { 
 	?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<div class="box">
-				<input type="button" class="btnWhite" value="<?=$output['apptSayNo'];?>" <?=$addAttrNo;?>>
+				<input type="button" class="btnWhite" value="<?=$output['apptSayNo'];?>" <?=$addAttrNo;?> onclick="location.href='index.php?do=showAppt&fkt=decline&id=<?=$current->appointmentid;?>'">
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<div class="box">
-				<input type="button" class="btnWhite" value="<?=$output['apptSayYes'];?>" <?=$addAttrYes;?>>
+				<input type="button" class="btnWhite" value="<?=$output['apptSayYes'];?>" <?=$addAttrYes;?> onclick="location.href='javascript:accept()'">
 			</div>
 		</div>
 	</div>
-<?php } ?>
+<?php } else { ?>
+	<?php if($current->enabled && $responsed && ($current->apptDate >= date('Y-m-d h:i:s'))) { 
+		?>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="box">
+					<input type="button" class="btnWhite" value="<?=$output['apptSayNo'];?>" <?=$addAttrNo;?> onclick="location.href='index.php?do=showAppt&fkt=decline&id=<?=$current->appointmentid;?>'">
+				</div>
+			</div>
+		</div>
+	<?php } 
+}?>
 
 
 
@@ -116,11 +312,56 @@ if(!$found) { // if the event is a past one, $found will be 0. Important for fut
 
 
 
+<div class="row">
+	<?php
+	$result = $db->query("SELECT * FROM users ORDER BY lastname");
+	while($data = $result->fetch_assoc()) {
+		
+		echo '<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">';
+
+		$result2 = $db->query("SELECT * FROM responses WHERE userid = ".$data['userid']." AND appointmentid = ".$current->appointmentid.";");
+		
+		if($result2->num_rows) {
+			$data2 = $result2->fetch_assoc();
+
+			switch($data2['response']) {
+				case '1':
+					echo '<div class="box apptSayYes">';
+					echo $data['firstname']." ".$data['lastname']." (".$data2['people'].")";
+					$tnCount += $data2['people'];
+				break;
+				
+				case '-1':
+					echo '<div class="box apptSayNo">';
+					echo $data['firstname']." ".$data['lastname'];
+				break;
+				
+				case '0':
+					echo '<div class="box apptSayWait">';
+					echo $data['firstname']." ".$data['lastname'];
+				break;
+			}
+		} else {
+			echo '<div class="box apptSayWait">';
+			echo $data['firstname']." ".$data['lastname'];
+		}
+
+		echo "</div></div>";
+	}
+	?>
+</div>
+
+
+
+<br>
+
+
+
 <div style="text-align: center">
 	<?php 
 	if($user->admin && $found == 1 && $current->enabled) {
 		echo '<input type="submit" value="'.$output['apptSave'].'" class="btn">';
-		echo '<a href="index.php?do=showAppt&cancel=true&id='.$current->appointmentid.'" class="btnDelete">'.$output['apptCancel'].'</a>';
+		echo '<a href="javascript:cancel()" class="btnDelete">'.$output['apptCancel'].'</a>';
 	} 
 	?>
 </div>
@@ -141,6 +382,40 @@ if(!$found) { // if the event is a past one, $found will be 0. Important for fut
 			mask: true,
 			value: '<?=$current->response;?>'
 		});
+
+		$('#tnCount').html("<?=$tnCount;?>");
 	});
+
+	function cancel() {
+		var uri = "index.php?do=showAppt&fkt=cancel&id=<?=$current->appointmentid;?>";
+
+		if(confirm("<?=$output['apptCancelConfirm'];?>")) {
+			location.href=uri;
+		}
+	}
+
+	function accept() {
+		var uri = "index.php?do=showAppt&fkt=accept&id=<?=$current->appointmentid;?>";
+
+		var people = prompt("<?=$output['apptAcceptHowMany'];?>","1");
+		
+		var max = <?=$current->max;?>;
+		var tnCount = <?=$tnCount;?>;
+		<?php
+			if($responsed) {
+				echo "var responsed = true;";
+				echo "var ownedplaces = ".$tn.";";
+			} else {
+				echo "var responsed = false;";
+				echo "var ownedplaces = 0;";
+			}
+		?>
+
+		if((parseInt(tnCount) + parseInt(people) - parseInt(ownedplaces)) > max) {
+			alert("<?=$output['apptTooMany'];?>");
+		} else {
+			location.href=uri + "&people=" + people;
+		}
+	}
 	</script>
 <?php } ?>

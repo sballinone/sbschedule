@@ -435,6 +435,36 @@ input:focus {
 	outline: none;
 }
 
+.apptSayYes {
+	background-color: #009900; 
+	color: #ffffff; 
+	padding: 5px 20px; 
+	border: 3px #000000 double;
+	text-align: center;
+	font-size: 10pt;
+	margin-bottom: 5px;
+}
+
+.apptSayNo {
+	background-color: #990000; 
+	color: #ffffff; 
+	padding: 5px 20px; 
+	border: 3px #000000 double;
+	text-align: center;
+	font-size: 10pt;
+	margin-bottom: 5px;
+}
+
+.apptSayWait {
+	background-color: #ffffff; 
+	color: #000000; 
+	padding: 5px 20px; 
+	border: 3px #000000 double;
+	text-align: center;
+	font-size: 10pt;
+	margin-bottom: 5px;
+}
+
 .thenexttripgoesto {
 	width: 100%;
 	box-sizing: border-box;
@@ -496,6 +526,13 @@ input:focus {
 	padding-right: 10px;
 	position: relative;
 	z-index: 2;
+}
+
+.notif {
+	padding: 10px 20px;
+	margin: 5px -20px 15px -20px;
+	background-color: #000;
+	color: #fff;
 }
 
 @media only screen and (min-width: 1075px) {

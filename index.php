@@ -1,5 +1,5 @@
 <?php
-$release="0.2.0";
+$release="0.3.0";
 
 session_start();
 
@@ -42,9 +42,9 @@ require_once "header.php";
 			</div>
 		</div>
 		<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-			<div class="box" id="tripSum">
+			<!--<div class="box" id="tripSum">
 				<i class='icofont-spoon-and-fork'></i> 1
-			</div>
+			</div>-->
 		</div>
 		<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
 			<div class="box" id="logout" onclick="javascript:location.href='signin.php'">
@@ -64,7 +64,7 @@ require_once "header.php";
 
 					<!-- Add Appt -->
 					<?php if($user->admin) { ?>
-						<div class='attraction' onclick='javascript:addElement()' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
+						<div class='attraction' onclick='location.href="index.php?do=apptAdd"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 							<strong><?=$output['apptAdd'];?></strong>
 						</div>
 					<?php } ?>
@@ -116,28 +116,31 @@ require_once "header.php";
 
 				<!-- User Menu -->
 				<div class="elements" style='margin-top: 50px;'>
-					<div class='attraction' onclick='javascript:location.href="index.php?do=apptRegistrations"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
+					<!--<div class='attraction' onclick='javascript:location.href="index.php?do=apptRegistrations"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 						<strong><?=$output['apptRegistrations'];?></strong>
-					</div>
+					</div>-->
 					<div class='attraction' onclick='javascript:location.href="index.php?do=apptArchived"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 						<strong><?=$output['apptArchived'];?></strong>
 					</div>
 
 					<br />
 
-					<div class='attraction' onclick='javascript:location.href="index.php?do=yourAccount"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
+					<!--<div class='attraction' onclick='javascript:location.href="index.php?do=yourAccount"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 						<strong><?=$output['yourAccount'];?></strong>
-					</div>
-					<?php if($user->admin) { ?>
+					</div>-->
+					<!--<?php if($user->admin) { ?>
 						<div class='attraction' onclick='javascript:location.href="index.php?do=members"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 							<strong><?=$output['members'];?></strong>
 						</div>
-					<?php } ?>
+					<?php } ?>-->
 				</div>
 				<!-- /User Menu -->
 
 				<div id='credits'><br />
 					&copy; <?=date('Y');?> <a href='https://saskiabrueckner.com' target='_blank'>World of SB</a> · Images: Dinner on <a href='https://unsplash.com' target='_blank'>unsplash.com</a><br /><br />
+					<a href='https://saskiabrueckner.com' target='_blank' style="text-decoration: none;">
+						<img src="./assets/img/logo/white/Logo-Full-White.png" height="62px" style="border: 0" onmouseover="this.src='./assets/img/logo/pink/Logo-Full-Pink.png';" onmouseout="this.src='./assets/img/logo/white/Logo-Full-White.png';">
+					</a><br />
 					Saskia Brückner Kreativagentur<br />Reichenberger Str. 21 · 71638 Ludwigsburg<br />
 					07141 309 747 0 · sales@saskiabrueckner.com
 				</div>
