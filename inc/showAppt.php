@@ -399,8 +399,6 @@ switch(strip_tags($_GET['fkt'])) {
 
 		var people = prompt("<?=$output['apptAcceptHowMany'];?>","1");
 		
-		var max = <?=$current->max;?>;
-		var tnCount = <?=$tnCount;?>;
 		<?php
 			if($responsed) {
 				echo "var responsed = true;";
@@ -409,6 +407,13 @@ switch(strip_tags($_GET['fkt'])) {
 				echo "var responsed = false;";
 				echo "var ownedplaces = 0;";
 			}
+
+			if($current->max) {
+				echo "var max = ".$current->max.";";
+			} else {
+				echo "var max = 32000000";
+			}
+			echo "var tnCount = ".$tnCount.";";
 		?>
 
 		if((parseInt(tnCount) + parseInt(people) - parseInt(ownedplaces)) > max) {

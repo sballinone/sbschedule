@@ -4,6 +4,15 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 3     | 1     |
+
+- Bugfix: Added missing AUTO_INCREMENT
+- Bugfix: Accept event didn't work if max = NULL
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 3     | 0     |
 
 - Added "accept", "decline", "save", "cancel", "create" event

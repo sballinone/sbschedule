@@ -1,5 +1,5 @@
 CREATE TABLE `appointment` (
-  `appointmentid` int(9) NOT NULL,
+  `appointmentid` int(9) NOT NULL AUTO_INCREMENT,
   `userid` int(9) NOT NULL,
   `title` varchar(255) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE `appointment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `responses` (
-  `registrationid` int(9) NOT NULL,
+  `registrationid` int(9) NOT NULL  AUTO_INCREMENT,
   `userid` int(9) NOT NULL,
   `appointmentid` int(9) NOT NULL,
   `response` int(5) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `responses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users` (
-  `userid` int(9) NOT NULL,
+  `userid` int(9) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
