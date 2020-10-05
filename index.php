@@ -1,5 +1,5 @@
 <?php
-$release="0.4.3";
+$release="0.4.4";
 
 session_start();
 
@@ -237,7 +237,7 @@ echo "</script>";
 
 <!-- Script -->
 <script src="./assets/js/scripts.js"></script>
-<script src="http://updates.sbviatges.com/sbschedule/update.js"></script>
+<script src="https://updates.sbviatges.com/sbschedule/update.js"></script>
 <script src="./assets/js/update.js"></script>
 
 </body>

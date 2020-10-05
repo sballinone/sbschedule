@@ -4,6 +4,14 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 4     |
+
+- Update script url changed to HTTPS server
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 3     |
 
 - Security lock: Restrict editor to ./lang/ folder
