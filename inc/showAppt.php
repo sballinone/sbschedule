@@ -370,37 +370,38 @@ switch(strip_tags($_GET['fkt'])) {
 	<?php
 	$result = $db->query("SELECT * FROM users ORDER BY lastname");
 	while($data = $result->fetch_assoc()) {
-		
-		echo '<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">';
+		if($data['active']) {
+			echo '<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">';
 
-		$result2 = $db->query("SELECT * FROM responses WHERE userid = ".$data['userid']." AND appointmentid = ".$current->appointmentid.";");
-		
-		if($result2->num_rows) {
-			$data2 = $result2->fetch_assoc();
+			$result2 = $db->query("SELECT * FROM responses WHERE userid = ".$data['userid']." AND appointmentid = ".$current->appointmentid.";");
+			
+			if($result2->num_rows) {
+				$data2 = $result2->fetch_assoc();
 
-			switch($data2['response']) {
-				case '1':
-					echo '<div class="box apptSayYes">';
-					echo $data['firstname']." ".$data['lastname']." (".$data2['people'].")";
-					$tnCount += $data2['people'];
-				break;
-				
-				case '-1':
-					echo '<div class="box apptSayNo">';
-					echo $data['firstname']." ".$data['lastname'];
-				break;
-				
-				case '0':
-					echo '<div class="box apptSayWait">';
-					echo $data['firstname']." ".$data['lastname'];
-				break;
+				switch($data2['response']) {
+					case '1':
+						echo '<div class="box apptSayYes">';
+						echo $data['firstname']." ".$data['lastname']." (".$data2['people'].")";
+						$tnCount += $data2['people'];
+					break;
+					
+					case '-1':
+						echo '<div class="box apptSayNo">';
+						echo $data['firstname']." ".$data['lastname'];
+					break;
+					
+					case '0':
+						echo '<div class="box apptSayWait">';
+						echo $data['firstname']." ".$data['lastname'];
+					break;
+				}
+			} else {
+				echo '<div class="box apptSayWait">';
+				echo $data['firstname']." ".$data['lastname'];
 			}
-		} else {
-			echo '<div class="box apptSayWait">';
-			echo $data['firstname']." ".$data['lastname'];
-		}
 
-		echo "</div></div>";
+			echo "</div></div>";
+		}
 	}
 	?>
 </div>

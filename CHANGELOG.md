@@ -4,6 +4,14 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 2     |
+
+- Bugfix: Hide inactive members in participants list
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 1     |
 
 - Improvement: Language File Code Editor included
