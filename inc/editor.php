@@ -4,6 +4,9 @@ $folder = strip_tags($_GET['folder']);
 $file = strip_tags($_GET['file']);
 $filepath = "./".$folder."/".$file;
 
+// SB Schedule security lock
+$folder = "lang";
+
 switch($fkt) {
 	case 'create':
 		if(!file_exists($filepath)) {
@@ -37,7 +40,10 @@ switch($fkt) {
 }
 ?>
 
-<span class='heading'>Editor</span><br />
+<span class='heading'>
+	Editor<br />
+	<small>./<?=$folder;?>/</small>
+</span><br />
 
 <div class='notif'>
 WARNING: Changes in this files may cause future issues in the software.

@@ -4,6 +4,15 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 3     |
+
+- Security lock: Restrict editor to ./lang/ folder
+- Added catalan language
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 2     |
 
 - Bugfix: Hide inactive members in participants list
