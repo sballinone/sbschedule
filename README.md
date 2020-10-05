@@ -3,6 +3,8 @@
 Just a small tool for scheduling for diner appointments.
 Feel free to use.
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/sballinone/sbschedule/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/sballinone/sbschedule/?branch=master)
+
 * * *
 
 ## Requirements
