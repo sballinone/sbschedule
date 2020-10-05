@@ -152,20 +152,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 function verifyData() {
 
-	var valid = false;
+	var valid = 0;
+	var validcount = 3;
 	
 	if($("#frmApptTitle").val() == "") {
 		$("#frmApptTitle").css({
 			backgroundColor: "#990000",
 			color: "#ffffff"
 		});
-		valid = false;
 	} else {
 		$("#frmApptTitle").css({
 			backgroundColor: "#ffffff",
 			color: "#000000"
 		});
-		valid = true;
+		valid++;
 	}
 
 	if($("#frmApptDate").val() == "") {
@@ -173,13 +173,12 @@ function verifyData() {
 			backgroundColor: "#990000",
 			color: "#ffffff"
 		});
-		valid = false;
 	} else {
 		$("#frmApptDate").css({
 			backgroundColor: "#ffffff",
 			color: "#000000"
 		});
-		valid = true;
+		valid++;
 	}
 	
 	if($("#frmAddress").val() == "") {
@@ -187,16 +186,15 @@ function verifyData() {
 			backgroundColor: "#990000",
 			color: "#ffffff"
 		});
-		valid = false;
 	} else {
 		$("#frmAddress").css({
 			backgroundColor: "#ffffff",
 			color: "#000000"
 		});
-		valid = true;
+		valid++;
 	}
 	
-	if(valid) {
+	if(valid == validcount) {
 		$("#frmApptAdd").attr('action', 'index.php?do=apptAdd&fkt=save');
 	}
 

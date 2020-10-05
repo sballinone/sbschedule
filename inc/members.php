@@ -21,6 +21,7 @@
 					$styleBTN = "background-color: #990000; color: #fff;";
 					$styleBACK = "background-color: #c0c0c0; color: #333333;";
 				} else {
+					$styleBACK = "";
 					if($member->admin) {
 						$styleBTN = "background-color: #336699; color: #fff;";
 					} else {
@@ -49,8 +50,8 @@
 
 		<div class='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
 			<div class='box'>
-				<div class='attraction' onclick='javascript:location.href=\"index.php?do=newMember\"' style='border: 1px #000000 solid; ".$styleBACK."'>
-					<div class='itemIcon' style='".$styleBTN."'>
+				<div class='attraction' onclick='javascript:location.href="index.php?do=newMember"' style='border: 1px #000000 solid;'>
+					<div class='itemIcon'>
 						<i class='icofont-plus'></i>
 					</div>
 					<strong><?=$output['add'];?></strong><br />

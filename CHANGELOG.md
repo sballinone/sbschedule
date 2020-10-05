@@ -4,6 +4,28 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 1     |
+
+- Bugfix: Notifications are always sent in the sender's language
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
+| 0     | 4     | 0     |
+
+- Bugfix: Accept/Decline events as normal user
+- Bugfix: Notification mail subjects and PAX #
+- Add/edit member
+- Your Account
+- Update check
+- English
+- Spanish
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 3     | 1     |
 
 - Bugfix: Added missing AUTO_INCREMENT

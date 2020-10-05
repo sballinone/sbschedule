@@ -1,5 +1,5 @@
 <?php
-$release="0.3.3";
+$release="0.4.0";
 
 session_start();
 
@@ -41,10 +41,7 @@ require_once "header.php";
 				&nbsp;
 			</div>
 		</div>
-		<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
-			<!--<div class="box" id="tripSum">
-				<i class='icofont-spoon-and-fork'></i> 1
-			</div>-->
+		<div class="col-xs-2 col-sm-2 col-md-1 col-lg-1" id="update">
 		</div>
 		<div class="col-xs-2 col-sm-1 col-md-1 col-lg-1">
 			<div class="box" id="logout" onclick="javascript:location.href='signin.php'">
@@ -125,9 +122,9 @@ require_once "header.php";
 
 					<br />
 
-					<!--<div class='attraction' onclick='javascript:location.href="index.php?do=yourAccount"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
+					<div class='attraction' onclick='javascript:location.href="index.php?do=yourAccount"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 						<strong><?=$output['yourAccount'];?></strong>
-					</div>-->
+					</div>
 					<?php if($user->admin) { ?>
 						<div class='attraction' onclick='javascript:location.href="index.php?do=members"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 							<strong><?=$output['members'];?></strong>
@@ -165,8 +162,19 @@ require_once "header.php";
 				echo '</div>';
 				?>
 			<div id="tripSumDetails">
-				Neue Termine:<br />
-				Deine Anmeldungen:<br />
+				<strong>There's an update available:</strong><br /><br />
+				Current release: <br /><?=$release;?><br /><br />
+				Available release: <br />
+				<div id="availableRelease"></div><br />
+				<div id="devRelease"></div>
+				Please follow this guide to update:<br />
+				<ol type="numbers">
+					<li><strong>Make a backup of your data!</strong>
+					<li>Visit your installation directory in a terminal.
+					<li>Run <code>git pull</code> to install the update.
+				</ol>
+				If you did not install your SB solution using git, you manually have to update by downloading the update files and extract them into your installation directory.<br />
+				Download address: <div id="downloadAddress"></div><br />
 			</div>
 		</div>
 	</div>
@@ -214,14 +222,19 @@ require_once "header.php";
 <script src="./assets/external/jquery/jquery.datetimepicker.full.min.js"></script>
 
 <!-- PHP to JS -->
-<?php/*
+<?php
+$data = explode(".",$release);
 echo "<script>";
-echo "var name='value';";
-echo "</script>"; */
+echo "var relmajor=".$data[0].";";
+echo "var relminor=".$data[1].";";
+echo "var relbuilt=".$data[2].";";
+echo "</script>";
 ?>
 
 <!-- Script -->
 <script src="./assets/js/scripts.js"></script>
+<script src="http://updates.sbviatges.com/sbschedule/update.js"></script>
+<script src="./assets/js/update.js"></script>
 
 </body>
 </html>

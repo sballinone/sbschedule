@@ -168,10 +168,10 @@ switch(strip_tags($_GET['fkt'])) {
 
 		$mtxt = "Hi ".$user->firstname.",\r\n\r\n";
 		$mtxt .= $output['apptDeclinedMail']."\r\n";
-		$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title.", ".strip_tags($_GET['people'])." PAX";
+		$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title.", 0 PAX";
 		$mtxt .= $mtxtfooter;
 
-		mail($user->email,"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
+		mail($user->email,"SB Schedule · Event ".$current->title." declined",$mtxt,"From: info@saskiabrueckner.com");
 
 		$sql = "SELECT users.email FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
 		$result = $db->query($sql);
@@ -181,7 +181,7 @@ switch(strip_tags($_GET['fkt'])) {
 		$mtxt .= $user->firstname." ".$user->lastname.", 0 PAX";
 		$mtxt .= $mtxtfooter;
 
-		mail($data['email'],"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
+		mail($data['email'],"SB Schedule · Event ".$current->title." declined",$mtxt,"From: info@saskiabrueckner.com");
 		
 		echo "<div class='notif'>".$output['apptDeclined']."</div>";
 
@@ -366,8 +366,8 @@ switch(strip_tags($_GET['fkt'])) {
 	?>
 </div>
 
+<script>
 <?php if($user->admin && $current->enabled) { ?>
-	<script>
 	document.addEventListener("DOMContentLoaded", function(event) {
 		jQuery('#frmApptDate').datetimepicker({
 			formatDate: 'Y-m-d H:i',
@@ -385,42 +385,42 @@ switch(strip_tags($_GET['fkt'])) {
 
 		$('#tnCount').html("<?=$tnCount;?>");
 	});
-
-	function cancel() {
-		var uri = "index.php?do=showAppt&fkt=cancel&id=<?=$current->appointmentid;?>";
-
-		if(confirm("<?=$output['apptCancelConfirm'];?>")) {
-			location.href=uri;
-		}
-	}
-
-	function accept() {
-		var uri = "index.php?do=showAppt&fkt=accept&id=<?=$current->appointmentid;?>";
-
-		var people = prompt("<?=$output['apptAcceptHowMany'];?>","1");
-		
-		<?php
-			if($responsed) {
-				echo "var responsed = true;";
-				echo "var ownedplaces = ".$tn.";";
-			} else {
-				echo "var responsed = false;";
-				echo "var ownedplaces = 0;";
-			}
-
-			if($current->max) {
-				echo "var max = ".$current->max."; ";
-			} else {
-				echo "var max = 32000000; ";
-			}
-			echo "var tnCount = ".$tnCount."; ";
-		?>
-
-		if((parseInt(tnCount) + parseInt(people) - parseInt(ownedplaces)) > max) {
-			alert("<?=$output['apptTooMany'];?>");
-		} else {
-			location.href=uri + "&people=" + people;
-		}
-	}
-	</script>
 <?php } ?>
+
+function cancel() {
+	var uri = "index.php?do=showAppt&fkt=cancel&id=<?=$current->appointmentid;?>";
+
+	if(confirm("<?=$output['apptCancelConfirm'];?>")) {
+		location.href=uri;
+	}
+}
+
+function accept() {
+	var uri = "index.php?do=showAppt&fkt=accept&id=<?=$current->appointmentid;?>";
+
+	var people = prompt("<?=$output['apptAcceptHowMany'];?>","1");
+	
+	<?php
+		if($responsed) {
+			echo "var responsed = true;";
+			echo "var ownedplaces = ".$tn.";";
+		} else {
+			echo "var responsed = false;";
+			echo "var ownedplaces = 0;";
+		}
+
+		if($current->max) {
+			echo "var max = ".$current->max."; ";
+		} else {
+			echo "var max = 32000000; ";
+		}
+		echo "var tnCount = ".$tnCount."; ";
+	?>
+
+	if((parseInt(tnCount) + parseInt(people) - parseInt(ownedplaces)) > max) {
+		alert("<?=$output['apptTooMany'];?>");
+	} else {
+		location.href=uri + "&people=" + people;
+	}
+}
+</script>

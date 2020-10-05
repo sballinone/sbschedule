@@ -37,7 +37,7 @@ function logoutButton() {
 // Notif
 
 var calcState = false;
-$('#tripSum').click(function() {
+function toggleNotif() {
 	if(calcState) {
 		$("#tripSumDetails").slideUp(function() {
 			$("#uiContent").fadeIn();
@@ -49,7 +49,7 @@ $('#tripSum').click(function() {
 		});
 		calcState = true;
 	}
-});
+}
 
 
 

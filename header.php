@@ -46,6 +46,6 @@ if(isset($_SESSION['userid'])) {
     if(file_exists("./lang/".$_SESSION['lang'].".php")) {
         include "./lang/".$_SESSION['lang'].".php";
     } else {
-        include "./lang/de.php";
+        include "./lang/".$langdefault.".php";
     }
 }

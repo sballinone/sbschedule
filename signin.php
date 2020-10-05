@@ -55,7 +55,7 @@ if (isset($_POST['pwd'])) {
 			<div class='heading' style='color: #ffffff'><?=$output['welcome'];?><br /><br /></div>
 
             <form action="signin.php" method="POST">
-                <input type="text" placeholder="<?=$output['email']; ?>" name="email">&nbsp;&nbsp;&nbsp;
+                <input type="text" placeholder="<?=$output['email']; ?>" name="email" value="<?=strip_tags(strtolower($_POST['email']));?>">&nbsp;&nbsp;&nbsp;
                 <input type="password" placeholder="<?=$output['password']; ?>" name="pwd">&nbsp;&nbsp;&nbsp;
                 <input type="submit" value="<?=$output['login']; ?>">
             </form>

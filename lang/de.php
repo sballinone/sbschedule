@@ -4,19 +4,25 @@ $output = [];
 // Common phrases
 $output['add'] = "Hinzufügen";
 $output['address'] = "Ort";
+$output['admin'] = "Admin";
 $output['archived'] = "Archivierte Events";
 $output['close'] = "Schließen";
 $output['email'] = "E-Mail";
+$output['enabled'] = "Aktiv";
+$output['gdpr'] = "Ich bestätige, dass die E-Mail-Adresse <span id='gdprEmail'></span> korrekt ist und ich die Erlaubnis des Eigentümers habe, diese E-Mail-Adresse zu speichern und im Rahmen der Funktionen von SB&nbsp;Schedule zu verarbeiten. Hierzu zählt auch der Versand von Bestätigungen und Ankündigungen zu Events, welche in SB&nbsp;Schedule erzeugt werden. Die Verantwortung für den Inhalt dieser Nachrichten obliegt der Administratoren. Dem Versand von Benachrichtigungen zu Produkten der World&nbsp;of&nbsp;SB wird nur zugestimmt, wenn das angemeldete Mitglied Administrator ist. Grundlage der Zustimmung ist die DSGVO.";
 $output['hi'] = "Hey";
+$output['lang'] = "Sprache";
 $output['login'] = "Anmelden";
 $output['loginFail'] = "Oops, da stimmt was nicht. Bitte prüfe deine Daten.";
 $output['members'] = "Alle Mitglieder";
 $output['new'] = "Neu";
 $output['nicetoseeyou'] = "Schön, dass du da bist!";
+$output['no'] = "Nein";
 $output['organizer'] = "Organisiert von";
 $output['password'] = "Passwort";
 $output['save'] = "Speichern";
 $output['welcome'] = "Willkommen<br />Bitte melde dich an:";
+$output['yes'] = "Ja";
 $output['yourAccount'] = "Dein Konto";
 
 // Appointment related phrases
@@ -53,3 +59,15 @@ $output['apptTitle'] = "Name des Events";
 $output['apptTooMany'] = "Zu viele Teilnehmer. Bitte wende dich an den Organisator des Events.";
 $output['apptTN'] = "Teilnehmer";
 $output['apptWaitForTN'] = "Warten auf TN";
+
+// Member
+$output['memberAdd'] = "Mitglied hinzufügen";
+$output['memberAlreadyExists'] = "Ein Mitglied mit dieser E-Mail-Adresse ist bereits registriert.";
+$output['memberFirstname'] = "Vorname";
+$output['memberLastname'] = "Nachname";
+$output['memberNew'] = "Herzlich Willkommen. Wir haben dir einen Account bei SB&nbsp;Schedule angelegt. Mit deinem Account kannst du deine Events und Teilnahmen ganz bequem und schnell planen und verwalten. Bitte benutze die folgenden Anmeldedaten. Dein Benutzername ist deine E-Mail-Adresse.";
+$output['memberPassSent'] = "Das Passwort wurde zurückgesetzt und an das Mitglied versendet.";
+$output['memberPasswordForgot'] = "Passwort zurücksetzen";
+$output['memberPasswordReset'] = "Wir haben wunschgemäß dein Passwort zurückgesetzt. Anbei findest du dein neues Passwort. Dein Benutzername ist deine E-Mail-Adresse.";
+$output['memberSaved'] = "Die Änderungen wurden gespeichert.";
+$output['memberShow'] = "Mitglied anzeigen";
