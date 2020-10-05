@@ -41,11 +41,18 @@ switch(strip_tags($_GET['fkt'])) {
 		$sql="UPDATE appointment SET enabled = 0 WHERE appointmentid = ".$current->appointmentid.";";
 		$result = $db->query($sql);
 
-		$sql="SELECT users.email, users.firstname FROM users left join responses ON responses.userid = users.userid WHERE responses.appointmentid = ".$current->appointmentid.";";
+		$sql="SELECT users.email, users.firstname, users.lang FROM users left join responses ON responses.userid = users.userid WHERE responses.appointmentid = ".$current->appointmentid.";";
 		$result = $db->query($sql);
 
 		if($result->num_rows) {
 			while($data = $result->fetch_assoc()) {
+
+				if(file_exists("./lang/".$data['lang'].".php")) {
+					include "./lang/".$data['lang'].".php";
+				} else {
+					include "./lang/".$langdefault.".php";
+				}
+
 				$mtxt = "Hi ".$data['firstname'].",\r\n\r\n";
 				$mtxt .= $output['apptCancelMailBeforeDetails']."\r\n";
 				$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n\r\n";
@@ -53,6 +60,12 @@ switch(strip_tags($_GET['fkt'])) {
 				$mtxt .= $mtxtfooter;
 
 				mail($data['email'],"SB Schedule · Event ".$current->title." canceled",$mtxt,"From: info@saskiabrueckner.com");
+
+				if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+					include "./lang/".$_SESSION['lang'].".php";
+				} else {
+					include "./lang/".$langdefault.".php";
+				}
 			}
 		}
 
@@ -94,17 +107,30 @@ switch(strip_tags($_GET['fkt'])) {
 			$db->query($sql);
 		}
 		
-		$sql="SELECT users.email, users.firstname FROM users left join responses ON responses.userid = users.userid WHERE responses.appointmentid = ".$current->appointmentid.";";
+		$sql="SELECT users.email, users.firstname, users.lang FROM users left join responses ON responses.userid = users.userid WHERE responses.appointmentid = ".$current->appointmentid.";";
 		$result = $db->query($sql);
 
 		if($result->num_rows) {
 			while($data = $result->fetch_assoc()) {
+
+				if(file_exists("./lang/".$data['lang'].".php")) {
+					include "./lang/".$data['lang'].".php";
+				} else {
+					include "./lang/".$langdefault.".php";
+				}
+
 				$mtxt = "Hi ".$data['firstname'].",\r\n\r\n";
 				$mtxt .= $output['apptChangedMail']."\r\n";
 				$mtxt .= date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n".$output['apptResponseDate']." ".$current->response;
 				$mtxt .= $mtxtfooter;
 
 				mail($data['email'],"SB Schedule · Event ".$current->title." changed",$mtxt,"From: info@saskiabrueckner.com");
+
+				if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+					include "./lang/".$_SESSION['lang'].".php";
+				} else {
+					include "./lang/".$langdefault.".php";
+				}
 			}
 		}
 
@@ -135,9 +161,16 @@ switch(strip_tags($_GET['fkt'])) {
 
 		mail($user->email,"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
 
-		$sql = "SELECT users.email FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
+		$sql = "SELECT users.email, users.lang FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
 		$result = $db->query($sql);
 		$data = $result->fetch_assoc();
+
+
+		if(file_exists("./lang/".$data['lang'].".php")) {
+			include "./lang/".$data['lang'].".php";
+		} else {
+			include "./lang/".$langdefault.".php";
+		}
 
 		$mtxt = "New confirmation for ".date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n";
 		$mtxt .= $user->firstname." ".$user->lastname.", ".strip_tags($_GET['people'])." PAX";
@@ -145,6 +178,13 @@ switch(strip_tags($_GET['fkt'])) {
 
 		mail($data['email'],"SB Schedule · Event ".$current->title." confirmed",$mtxt,"From: info@saskiabrueckner.com");
 		
+		if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+			include "./lang/".$_SESSION['lang'].".php";
+		} else {
+			include "./lang/".$langdefault.".php";
+		}
+
+
 		echo "<div class='notif'>".$output['apptConfirmed']."</div>";
 
 		$addAttrYes = " style='background-color: #009900; color: #ffffff'";
@@ -173,9 +213,16 @@ switch(strip_tags($_GET['fkt'])) {
 
 		mail($user->email,"SB Schedule · Event ".$current->title." declined",$mtxt,"From: info@saskiabrueckner.com");
 
-		$sql = "SELECT users.email FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
+		$sql = "SELECT users.email, users.lang FROM users LEFT JOIN appointment ON users.userid = appointment.userid;";
 		$result = $db->query($sql);
 		$data = $result->fetch_assoc();
+
+
+		if(file_exists("./lang/".$data['lang'].".php")) {
+			include "./lang/".$data['lang'].".php";
+		} else {
+			include "./lang/".$langdefault.".php";
+		}
 
 		$mtxt = "New cancelation for ".date('d. M Y, H:i', strtotime($current->apptDate)).": ".$current->title."\r\n";
 		$mtxt .= $user->firstname." ".$user->lastname.", 0 PAX";
@@ -183,6 +230,13 @@ switch(strip_tags($_GET['fkt'])) {
 
 		mail($data['email'],"SB Schedule · Event ".$current->title." declined",$mtxt,"From: info@saskiabrueckner.com");
 		
+		if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+			include "./lang/".$_SESSION['lang'].".php";
+		} else {
+			include "./lang/".$langdefault.".php";
+		}
+
+
 		echo "<div class='notif'>".$output['apptDeclined']."</div>";
 
 		$addAttrYes = "";

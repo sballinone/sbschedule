@@ -43,17 +43,31 @@ switch(strip_tags($_GET['fkt'])) {
 		$db->query($sql);
 		$newID = $db->insert_id;
 		
-		$sql = "SELECT users.email, users.firstname FROM users;";
+		$sql = "SELECT users.email, users.firstname, users.lang FROM users;";
 		$result = $db->query($sql);
 
 		if($result->num_rows) {
 			while($data = $result->fetch_assoc()) {
+				
+				if(file_exists("./lang/".$data['lang'].".php")) {
+					include "./lang/".$data['lang'].".php";
+				} else {
+					include "./lang/".$langdefault.".php";
+				}
+
 				$mtxt = "Hi ".$data['firstname'].",\r\n\r\n";
 				$mtxt .= $output['apptNew']."\r\n";
 				$mtxt .= date('d. M Y, H:i', strtotime($apptDate)).": ".$title."\r\n".$output['apptResponseDate']." ".$apptResponse;
 				$mtxt .= $mtxtfooter;
 
 				mail($data['email'],"SB Schedule · Event ".$title." created",$mtxt,"From: info@saskiabrueckner.com");
+
+				if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+					include "./lang/".$_SESSION['lang'].".php";
+				} else {
+					include "./lang/".$langdefault.".php";
+				}
+				
 			}
 		}
 

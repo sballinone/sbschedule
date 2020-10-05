@@ -1,5 +1,5 @@
 <?php
-$release="0.4.0";
+$release="0.4.1";
 
 session_start();
 
@@ -128,6 +128,10 @@ require_once "header.php";
 					<?php if($user->admin) { ?>
 						<div class='attraction' onclick='javascript:location.href="index.php?do=members"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
 							<strong><?=$output['members'];?></strong>
+						</div>
+
+						<div class='attraction' onclick='javascript:location.href="index.php?do=editor&folder=lang"' style='background-color: #333333; border: 1px #ffffff solid; color: #efefef'>
+							<strong><?=$output['lang'];?></strong>
 						</div>
 					<?php } ?>
 				</div>

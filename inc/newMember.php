@@ -28,6 +28,13 @@ switch(strip_tags($_GET['fkt'])) {
 				'".$admin."');";
 			$db->query($sql);
 			
+			
+			if(file_exists("./lang/".$lang.".php")) {
+				include "./lang/".$lang.".php";
+			} else {
+				include "./lang/".$langdefault.".php";
+			}
+
 			$mtxt = "Hi ".$firstname.",\r\n\r\n";
 			$mtxt .= $output['memberNew']."\r\n";
 			$mtxt .= $output['password'].": ".$pwd."\r\n";
@@ -35,6 +42,13 @@ switch(strip_tags($_GET['fkt'])) {
 			$mtxt .= $mtxtfooter;
 			
 			mail($data['email'],"SB Schedule · Your user account",$mtxt,"From: info@saskiabrueckner.com");
+
+			if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+				include "./lang/".$_SESSION['lang'].".php";
+			} else {
+				include "./lang/".$langdefault.".php";
+			}
+			
 			
 			echo "<script>location.href='index.php?do=members';</script>";
 			echo "Member created. <a href='index.php'>Continue</a>";

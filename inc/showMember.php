@@ -57,6 +57,13 @@ switch(strip_tags($_GET['fkt'])) {
 		$sql = "UPDATE users SET password = '".md5($pwd)."' WHERE userid = ".$current->userid.";";
 		$db->query($sql);
 		
+
+		if(file_exists("./lang/".$current->lang.".php")) {
+			include "./lang/".$current->lang.".php";
+		} else {
+			include "./lang/".$langdefault.".php";
+		}
+
 		$mtxt = "Hi ".$current->firstname.",\r\n\r\n";
 		$mtxt .= $output['memberPasswordReset']."\r\n";
 		$mtxt .= $output['password'].": ".$pwd."\r\n";
@@ -64,6 +71,12 @@ switch(strip_tags($_GET['fkt'])) {
 		$mtxt .= $mtxtfooter;
 		
 		mail($data['email'],"SB Schedule · Your new password",$mtxt,"From: info@saskiabrueckner.com");
+
+		if(file_exists("./lang/".$_SESSION['lang'].".php")) {
+			include "./lang/".$_SESSION['lang'].".php";
+		} else {
+			include "./lang/".$langdefault.".php";
+		}
 
 		echo "<div class='notif'>".$output['memberPassSent']."</div>";
 	break;

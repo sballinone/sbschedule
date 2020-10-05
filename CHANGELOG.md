@@ -6,7 +6,8 @@
 | ----- | ----- | ----- |
 | 0     | 4     | 1     |
 
-- Bugfix: Notifications are always sent in the sender's language
+- Improvement: Language File Code Editor included
+- Improvement: Change languages individually for each mail
 
 * * *
 
