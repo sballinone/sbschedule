@@ -1,4 +1,5 @@
 <?php
+unset($output);
 $output = [];
 
 // Common phrases

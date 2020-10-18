@@ -1,4 +1,5 @@
 <?php
+unset($output);
 $output = [];
 
 // Vorbereitet für Salva zur Übersetzung ins Italienische

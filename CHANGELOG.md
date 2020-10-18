@@ -4,6 +4,14 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 5     |
+
+- Live test, if unset($output) clears the language-change-error
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 4     |
 
 - Update script url changed to HTTPS server
