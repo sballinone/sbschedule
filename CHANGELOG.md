@@ -4,6 +4,14 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 6     |
+
+- Homescreen icon for mobile devices
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 5     |
 
 - Live test, if unset($output) clears the language-change-error
