@@ -269,8 +269,8 @@ switch(strip_tags($_GET['fkt'])) {
 			$endtime->modify("+3 hours");
 			$endtime->setTimezone($cetTz);
 		?>
-		<input type="text" name="date_start" value="<?=$starttime->format('Ymd\THis');?>">
-		<input type="text" name="date_end" value="<?=$endtime->format('Ymd\THis');?>">
+		<input type="hidden" name="date_start" value="<?=$starttime->format('Ymd\THis');?>">
+		<input type="hidden" name="date_end" value="<?=$endtime->format('Ymd\THis');?>">
 		<input type="hidden" name="location" value="<?=$current->address;?>">
 		<input type="hidden" name="description" value="Imported by SB Schedule">
 		<input type="hidden" name="summary" value="<?=$current->title;?>">
