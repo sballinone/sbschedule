@@ -260,14 +260,9 @@ switch(strip_tags($_GET['fkt'])) {
 			
 			echo $output['organizer']." ".$data['firstname']." ".$data['lastname']." <a href='mailto:".$data['email']."' style='text-decoration: none; color: #ffffff; background-color: #000000; padding: 2px 5px; padding-right: 0'><i class='icofont-envelope'> </i></a>&nbsp;";
 
-			$utcTz = new DateTimeZone('UTC');
-			$cetTz = new DateTimeZone($groupTimezone);
-
-			$starttime = new DateTime(date('Ymd\THis',strtotime($current->apptDate)), $cetTz);
-			$starttime->setTimezone($cetTz);
-			$endtime = new DateTime(date('Y-m-d H:i', strtotime($current->apptDate)), $cetTz);
+			$starttime = new DateTime(date('Ymd\THis',strtotime($current->apptDate)));
+			$endtime = new DateTime(date('Y-m-d H:i', strtotime($current->apptDate)));
 			$endtime->modify("+3 hours");
-			$endtime->setTimezone($cetTz);
 		?>
 		<input type="hidden" name="date_start" value="<?=$starttime->format('Ymd\THis');?>">
 		<input type="hidden" name="date_end" value="<?=$endtime->format('Ymd\THis');?>">
