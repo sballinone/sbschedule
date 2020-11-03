@@ -12,3 +12,4 @@ $mtxtfooter = "\r\n\r\n"."This email was sent automatically by SB Schedule.\r\nS
 $langdefault = "en";
 
 $group_url = "https://sbviatges.com";
+$groupTimezone = 'Europe/Berlin';
