@@ -246,21 +246,34 @@ switch(strip_tags($_GET['fkt'])) {
 
 ?>
 
-<form action="index.php?do=showAppt&fkt=save&id=<?=$current->appointmentid;?>" method="POST">
 
 <span class='heading'><?=$current->title;?></span><br />
 <small>
-	<?php
-		echo "<strong>".date('d. M Y H:i', strtotime($current->apptDate))."</strong> · ";
-		echo "<span id='tnCount'>".$tnCount."</span> ".$output['apptSaidYes']."<br />";
+	<form method="post" action="inc/ics.php">
+		<?php
+			echo "<strong>".date('d. M Y H:i', strtotime($current->apptDate))."</strong> · ";
+			echo "<span id='tnCount'>".$tnCount."</span> ".$output['apptSaidYes']."<br />";
+			
+			$sql = "SELECT firstname, lastname, email FROM users WHERE userid = ".$current->userid.";";
+			$result = $db->query($sql);
+			$data = $result->fetch_assoc();
+			
+			echo $output['organizer']." ".$data['firstname']." ".$data['lastname']." <a href='mailto:".$data['email']."' style='text-decoration: none; color: #ffffff; background-color: #000000; padding: 2px 5px; padding-right: 0'><i class='icofont-envelope'> </i></a>&nbsp;";
 
-		$sql = "SELECT firstname, lastname, email FROM users WHERE userid = ".$current->userid.";";
-		$result = $db->query($sql);
-		$data = $result->fetch_assoc();
-
-		echo $output['organizer']." ".$data['firstname']." ".$data['lastname']." <a href='mailto:".$data['email']."' style='text-decoration: none; color: #ffffff; background-color: #000000; padding: 2px 5px;'><i class='icofont-envelope'> </i></a>";
-	?>
+			$endtime = new DateTime(date('Y-m-d H:i', strtotime($current->apptDate)));
+			$endtime->modify("+3 hours");
+		?>
+		<input type="hidden" name="date_start" value="<?=date('Y-m-d H:i',strtotime($current->apptDate));?>">
+		<input type="hidden" name="date_end" value="<?=$endtime->format('Y-m-d H:i');?>">
+		<input type="hidden" name="location" value="<?=$current->address;?>">
+		<input type="hidden" name="description" value="Imported by SB Schedule">
+		<input type="hidden" name="summary" value="<?=$current->title;?>">
+		<input type="hidden" name="url" value="<?=$group_url;?>">
+		<input type="submit" value="Add to Calendar" style='text-decoration: none; color: #ffffff; background-color: #000000; padding: 2px 5px; width: auto; font-size: 10pt; height: 22px;'>
+	</form>
 </small>
+
+<form action="index.php?do=showAppt&fkt=save&id=<?=$current->appointmentid;?>" method="POST">
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">

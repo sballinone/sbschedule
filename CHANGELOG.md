@@ -4,6 +4,14 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 7     |
+
+- Add ics export
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 6     |
 
 - Homescreen icon for mobile devices

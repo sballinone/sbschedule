@@ -10,3 +10,5 @@ $dbport = "8889";
 $mtxtfooter = "\r\n\r\n"."This email was sent automatically by SB Schedule.\r\nSB Schedule is a product by Saskia Brückner Kreativagentur · World of SB";
 
 $langdefault = "en";
+
+$group_url = "https://sbviatges.com";
