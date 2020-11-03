@@ -35,7 +35,7 @@ if (isset($_POST['pwd'])) {
 			if(password_needs_rehash($pass,PASSWORD_DEFAULT)) {
 				$hashed_pass = password_hash($_POST['pwd'],PASSWORD_DEFAULT);
 
-				$sql = "UPDATE users SET password = '".$hashed_pass."' WHERE userid = ".$_SESSION['userid'].";";
+				$sql = "UPDATE users SET password = '".$hashed_pass."' WHERE userid = ".$data['userid'].";";
 				$db->query($sql);
 			}
 
