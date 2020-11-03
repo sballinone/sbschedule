@@ -23,7 +23,7 @@ if (isset($_POST['pwd'])) {
 		if($pass == md5($_POST['pwd'])) {
 			$hashed_pass = password_hash($_POST['pwd'],PASSWORD_DEFAULT);
 
-			$sql = "UPDATE users SET password = '".$hashed_pass."' WHERE userid = ".$_SESSION['userid'].";";
+			$sql = "UPDATE users SET password = '".$hashed_pass."' WHERE userid = ".$data['userid'].";";
 			$db->query($sql);
 
 			$pass = $hashed_pass;
