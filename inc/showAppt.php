@@ -263,9 +263,9 @@ switch(strip_tags($_GET['fkt'])) {
 			$utcTz = new DateTimeZone('UTC');
 			$cetTz = new DateTimeZone($groupTimezone);
 
-			$starttime = new DateTime(date('Ymd\THis',strtotime($current->apptDate."Z")), $utcTz);
+			$starttime = new DateTime(date('Ymd\THis',strtotime($current->apptDate)), $cetTz);
 			$starttime->setTimezone($cetTz);
-			$endtime = new DateTime(date('Y-m-d H:i', strtotime($current->apptDate."Z")), $utcTz);
+			$endtime = new DateTime(date('Y-m-d H:i', strtotime($current->apptDate)), $cetTz);
 			$endtime->modify("+3 hours");
 			$endtime->setTimezone($cetTz);
 		?>
