@@ -11,4 +11,4 @@ INSERT INTO responses (registrationid, userid, appointmentid, response, response
 (2, 1, 5, 1, 2, '2020-09-26 02:43:42', NULL);
 
 INSERT INTO users (userid, firstname, lastname, email, password, lang, active, admin) VALUES
-(1, 'Demo', 'User', 'demo@user.com', 'fe01ce2a7fbac8fafaed7c982a04e229', 'de', 1, 1);
+(1, 'Demo', 'User', 'demo@user.com', '$2y$10$XvdiBhRMZaWN0s8k5ErbZOeSd7.RimTmBsCVY5RhmYpTaHJ/9gERu', 'de', 1, 1);

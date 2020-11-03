@@ -4,6 +4,15 @@
 
 | Mayor | Minor | Build |
 | ----- | ----- | ----- |
+| 0     | 4     | 8     |
+
+- Fixed .ics time format
+- Updated signin to current security standards
+
+* * *
+
+| Mayor | Minor | Build |
+| ----- | ----- | ----- |
 | 0     | 4     | 7     |
 
 - Add ics export

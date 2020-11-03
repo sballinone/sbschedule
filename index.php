@@ -1,5 +1,5 @@
 <?php
-$release="0.4.7";
+$release="0.4.8";
 
 session_start();
 
@@ -190,7 +190,7 @@ require_once "header.php";
 				Available release: <br />
 				<div id="availableRelease"></div><br />
 				Changes in this release: <br />
-				<div id="changelog"></div><br />
+				<div id="changelog" style='border: 3px solid #990000; padding: 15px;'></div><br />
 				<div id="devRelease"></div>
 				Please follow this guide to update:<br />
 				<ol type="numbers">

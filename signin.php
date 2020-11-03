@@ -6,18 +6,47 @@ session_start();
 include("header.php");
 
 if (isset($_POST['pwd'])) {
-	$sql = "SELECT userid FROM users WHERE email = '".strip_tags(strtolower($_POST['email']))."' AND password = '".md5(strip_tags($_POST['pwd']))."' AND active = 1;";
-
+	$sql = "SELECT * FROM users WHERE email = '".strip_tags(strtolower($_POST['email']))."' AND active = 1;";
 	$result = $db->query($sql);
-
+	
 	if(!$result->num_rows) {
 		echo "<script>alert('".$output['loginFail']."');</script>";
 	} else {
 		$data = $result->fetch_assoc();
-		$_SESSION['userid'] = $data['userid'];
-		$_SESSION['lang'] = $data['lang'];
-		header("Location: index.php");
-		exit;
+		$pass = $data['password'];
+
+		
+		
+		// Switch to the new hash for users of release 0.4.7 or earlier.
+		// Will be removed within the next releases!
+		// Please make sure that all of your members sign in once asap.
+		if($pass == md5($_POST['pwd'])) {
+			$hashed_pass = password_hash($_POST['pwd'],PASSWORD_DEFAULT);
+
+			$sql = "UPDATE users SET password = '".$hashed_pass."' WHERE userid = ".$_SESSION['userid'].";";
+			$db->query($sql);
+
+			$pass = $hashed_pass;
+		}
+
+
+
+		if(password_verify(strip_tags($_POST['pwd']), $pass)) {
+			if(password_needs_rehash($pass,PASSWORD_DEFAULT)) {
+				$hashed_pass = password_hash($_POST['pwd'],PASSWORD_DEFAULT);
+
+				$sql = "UPDATE users SET password = '".$hashed_pass."' WHERE userid = ".$_SESSION['userid'].";";
+				$db->query($sql);
+			}
+
+			$_SESSION['userid'] = $data['userid'];
+			$_SESSION['lang'] = $data['lang'];
+
+			header("Location: index.php");
+			exit;
+		} else {
+			echo "<script>alert('".$output['loginFail']."');</script>";
+		}
 	}
 }
 

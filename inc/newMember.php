@@ -22,7 +22,7 @@ switch(strip_tags($_GET['fkt'])) {
 				'".$firstname."',
 				'".$lastname."',
 				'".$email."',
-				'".md5($pwd)."',
+				'".password_hash($pwd, PASSWORD_DEFAULT)."',
 				'".$lang."',
 				'".$enabled."',
 				'".$admin."');";

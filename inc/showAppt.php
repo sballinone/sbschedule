@@ -263,8 +263,8 @@ switch(strip_tags($_GET['fkt'])) {
 			$endtime = new DateTime(date('Y-m-d H:i', strtotime($current->apptDate)));
 			$endtime->modify("+3 hours");
 		?>
-		<input type="hidden" name="date_start" value="<?=date('Y-m-d H:i',strtotime($current->apptDate));?>">
-		<input type="hidden" name="date_end" value="<?=$endtime->format('Y-m-d H:i');?>">
+		<input type="hidden" name="date_start" value="<?=date('Ymd\THis',strtotime($current->apptDate));?>">
+		<input type="hidden" name="date_end" value="<?=$endtime->format('Ymd\THis');?>">
 		<input type="hidden" name="location" value="<?=$current->address;?>">
 		<input type="hidden" name="description" value="Imported by SB Schedule">
 		<input type="hidden" name="summary" value="<?=$current->title;?>">

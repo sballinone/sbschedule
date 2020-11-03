@@ -28,7 +28,7 @@ CREATE TABLE users (
   firstname varchar(50) NOT NULL,
   lastname varchar(50) NOT NULL,
   email varchar(255) NOT NULL,
-  password varchar(50) NOT NULL,
+  password varchar(255) NOT NULL,
   lang varchar(3) NOT NULL,
   active tinyint(1) NOT NULL DEFAULT '1',
   admin tinyint(1) NOT NULL DEFAULT '0',
